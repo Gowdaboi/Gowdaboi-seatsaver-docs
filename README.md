@@ -92,6 +92,11 @@ SMS delivery currently runs on a Twilio trial account, which only reaches
 pre-verified numbers — production messaging in India additionally requires DLT
 template registration.
 
+## Contact
+
+Questions, feedback, bug reports and data requests:
+**anyproblemapps@gmail.com**
+
 ## Privacy and data deletion
 
 See [privacy-policy.html](privacy-policy.html).
