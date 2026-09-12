@@ -94,13 +94,22 @@ template registration.
 
 ## Privacy and data deletion
 
-See [privacy-policy.md](privacy-policy.md).
+See [privacy-policy.html](privacy-policy.html).
 
 Hosts can permanently delete their account and all associated data from inside
 the app, or request deletion by email — see
-[Delete your account](https://gowdaboi.github.io/Seat-saver/delete-account.html).
+[Delete your account](https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/delete-account.html).
+
+## Try it
+
+The web app runs at
+[gowdaboi.github.io/Gowdaboi-seatsaver-docs](https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/).
 
 ## About this repository
 
-This repo holds public documentation only. The application source is kept in a
-separate private repository.
+This repo holds the public face of Seat Saver: this overview, the privacy
+policy and account-deletion page, and the compiled web build that serves the
+app. **The source is not here** — the Flutter and database code, the schema and
+row-level security policies, and the design decision log all live in a separate
+private repository. What you can see here is what any visitor's browser
+downloads to run the app.
