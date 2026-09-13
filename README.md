@@ -40,6 +40,11 @@ the thing a paper chart cannot express.
 - Get an SMS reminder before the round starts, with a one-tap link to cancel
   and free the seat for someone else
 
+The camera is used on exactly one screen — a host scanning a guest in — and the
+frame is read on the device to decode the QR, never recorded or uploaded.
+Declining the permission leaves the rest of the app working, and that screen
+offers a way to grant it later rather than becoming a dead end.
+
 ## Tech
 
 - **Flutter** — one codebase, running on web and Android
@@ -83,14 +88,21 @@ everything it points at would evict whoever is sitting there right now.
 
 ## Current state
 
-Working and deployed on the web. The Android build is signed and preparing for
-Play Store release. The guest booking flow, host floor design, dining rounds,
-QR check-in, no-show handling and reminder delivery are all implemented
+Working and deployed on the web. Guest booking, host floor design, dining
+rounds, QR check-in, no-show handling and reminder delivery are all implemented
 against live data.
+
+The Android build is signed and preparing for Play Store release. The **host**
+side has been run there properly — every host screen, and the whole workflow
+end to end: designing a floor, adding a menu, starting a round, seating a
+walk-in, generating the event QR, and checking a guest in. The **guest** side
+has not yet run on Android. A guest signs in with an SMS one-time code, so that
+is waiting on the Twilio item below rather than on the app.
 
 SMS delivery currently runs on a Twilio trial account, which only reaches
 pre-verified numbers — production messaging in India additionally requires DLT
-template registration.
+template registration. This is the one dependency holding up both real guest
+sign-in and Android testing of the guest journey.
 
 ## Contact
 
