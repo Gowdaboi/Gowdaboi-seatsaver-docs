@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seat Saver — overview</title>
+<meta name="description" content="Seating and service management for catered events, built for Indian wedding-style functions where guests are seated and served in timed rounds.">
+<link rel="icon" href="favicon.png">
+<style>
+  :root {
+    --bg: #fdf6f4; --fg: #2b2320; --muted: #6b5b55;
+    --accent: #8c4a3c; --card: #ffffff; --border: #e8d9d4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1614; --fg: #f2e9e6; --muted: #b9a7a1;
+      --accent: #e29684; --card: #261f1d; --border: #3a302d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 64px;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { font-size: 1.85rem; line-height: 1.2; margin: 0 0 20px; }
+  h2 { font-size: 1.2rem; margin: 36px 0 10px; padding-top: 14px; border-top: 1px solid var(--border); }
+  h3 { font-size: 1.02rem; margin: 26px 0 8px; color: var(--accent); }
+  p { margin: 12px 0; }
+  a { color: var(--accent); }
+  ul { padding-left: 22px; margin: 12px 0; }
+  li { margin: 6px 0; }
+  strong { font-weight: 650; }
+  em { font-style: italic; }
+  code {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 5px; font-size: 0.9em;
+  }
+  footer {
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<main>
+<h1>Seat Saver</h1>
+<p>Seating and service management for catered events — built for Indian wedding-style functions, where guests are seated and served in timed rounds rather than all at once.</p>
+<h2>The problem</h2>
+<p>At a large function, seating is run on paper and by shouting. A floor manager holds the layout in their head, guests mill around waiting to be told where to sit, and when a table is served and cleared nobody quite knows which seats are free for the next sitting. The failure mode isn't dramatic — it's a constant low-grade friction that gets worse as the hall gets bigger, and it lands on whoever is least able to fix it mid-service.</p>
+<p><strong>Pankti</strong> (banana-leaf) service makes this sharper. Guests eat in <em>rounds</em>: one sitting is served, cleared, and the next group takes those same seats. A seat isn't simply free or taken — it's free <em>for a particular round</em>, which is the thing a paper chart cannot express.</p>
+<h2>What it does</h2>
+<p><strong>For the caterer</strong></p>
+<ul>
+<li>Design the floor once — sections, tables and seats, laid out as a plan rather than drawn to scale</li>
+<li>Run dining rounds: start a sitting, see who is seated, hand seats to the next round as they clear</li>
+<li>Assign walk-ins and VIPs directly, without the guest needing an account</li>
+<li>Scan a guest's QR at the door to check them in</li>
+<li>Handle no-shows: seats held past their timeout are released and offered on to waiting guests in order</li>
+<li>Keep a recap of every past event — floor, menu and bookings</li>
+</ul>
+<p><strong>For the guest</strong></p>
+<ul>
+<li>Scan a QR code at the venue; no app install, no account signup</li>
+<li>See the menu and the actual floor plan the host designed</li>
+<li>Book a seat for the next round with room</li>
+<li>Get an SMS reminder before the round starts, with a one-tap link to cancel and free the seat for someone else</li>
+</ul>
+<p>The camera is used on exactly one screen — a host scanning a guest in — and the frame is read on the device to decode the QR, never recorded or uploaded. Declining the permission leaves the rest of the app working, and that screen offers a way to grant it later rather than becoming a dead end.</p>
+<h2>Tech</h2>
+<ul>
+<li><strong>Flutter</strong> — one codebase, running on web and Android</li>
+<li><strong>Supabase</strong> — Postgres with Row Level Security, Auth, Realtime, and Edge Functions</li>
+<li><strong>Twilio</strong> — SMS and WhatsApp for guest verification and round reminders</li>
+</ul>
+<p>Multi-tenancy is enforced in the database rather than the application: every caterer's data is isolated by row-level policies, so an app-layer bug cannot leak one caterer's event into another's. Anything that has to be atomic, or that legitimately needs to read across that boundary, runs as a database function that begins by checking who is asking.</p>
+<h2>A few design decisions worth explaining</h2>
+<p><strong>Seat availability is derived, never stored.</strong> There is no table recording "seat 4 is taken for round 2". A seat is taken for a round if an active booking for that round holds it — and that is computed on read. The stored version would have been faster and would have started lying the first time a booking was cancelled by one path and not another.</p>
+<p><strong>The host's floor designer and the guest's seat picker are the same renderer.</strong> Not two views of shared data — literally one component. What the host arranges is what the guest books from, so the two cannot drift apart as either side changes.</p>
+<p><strong>Events are archived, never deleted.</strong> A caterer running two functions a week accumulates a hundred a year, and they clutter every picker in the app. Archiving hides an event completely while preserving the floor, menu, bookings and recap. The only thing that truly deletes is a host deleting their whole account, which is a different intent entirely.</p>
+<p><strong>A missed reminder stays missed.</strong> Round reminders count back from a round's <em>scheduled</em> start, not the moment the host presses Start — which is too late to warn anyone. If the send window is missed, nothing is sent: a late "starts in 5 minutes" is worse than silence.</p>
+<p><strong>Cancelling a booking frees only the seats it is actually holding.</strong> A booking for a later sitting holds no physical seat yet, so releasing everything it points at would evict whoever is sitting there right now.</p>
+<h2>Current state</h2>
+<p>Working and deployed on the web. Guest booking, host floor design, dining rounds, QR check-in, no-show handling and reminder delivery are all implemented against live data.</p>
+<p>The Android build is signed and preparing for Play Store release. The <strong>host</strong> side has been run there properly — every host screen, and the whole workflow end to end: designing a floor, adding a menu, starting a round, seating a walk-in, generating the event QR, and checking a guest in. The <strong>guest</strong> side has not yet run on Android. A guest signs in with an SMS one-time code, so that is waiting on the Twilio item below rather than on the app.</p>
+<h3>A note on SMS, for anyone evaluating this</h3>
+<p>SMS delivery currently runs on a Twilio <strong>trial</strong> account, which only reaches pre-verified numbers. Production messaging to Indian numbers additionally requires DLT template registration.</p>
+<p>This is deliberate, not an unfinished edge. The Twilio integration is built and has been tested end to end on the trial tier — guest verification codes, round reminders and cancel links all work against real numbers on the verified list. What has not happened is <em>paying for a production Twilio account</em>, because production SMS is a recurring per-message cost and it only becomes justified once a caterer is actually using the app for a real function.</p>
+<p>The order matters here: <strong>SMS is only needed for guest sign-in, which is the second half of the product and does nothing on its own.</strong> A guest books a seat at an event a host has already created, in a hall that host has already laid out. Until there is a host running an event, there are no guests to verify. So the sequence is a paying host first, production SMS second — not the reverse.</p>
+<p>Everything on the host side — floor design, menus, rounds, walk-ins, QR check-in, no-show release — runs today without any of this.</p>
+<h2>Contact</h2>
+<p>Questions, feedback, bug reports and data requests: <strong>anyproblemapps@gmail.com</strong></p>
+<h2>Privacy and data deletion</h2>
+<p>See <a href="privacy-policy.html">privacy-policy.html</a>.</p>
+<p>Hosts can permanently delete their account and all associated data from inside the app, or request deletion by email — see <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/delete-account.html">Delete your account</a>.</p>
+<h2>Try it</h2>
+<p>The web app runs at <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/">gowdaboi.github.io/Gowdaboi-seatsaver-docs</a>.</p>
+<h2>About this repository</h2>
+<p>This repo holds the public face of Seat Saver: this overview, the privacy policy and account-deletion page, and the compiled web build that serves the app. <strong>The source is not here</strong> — the Flutter and database code, the schema and row-level security policies, and the design decision log all live in a separate private repository. What you can see here is what any visitor's browser downloads to run the app.</p>
+<footer>
+  <a href="index.html">Open the app</a> ·
+  <a href="privacy-policy.html">Privacy policy</a> ·
+  <a href="delete-account.html">Delete your account</a>
+</footer>
+</main>
+</body>
+</html>

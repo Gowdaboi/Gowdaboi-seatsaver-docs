@@ -99,10 +99,27 @@ walk-in, generating the event QR, and checking a guest in. The **guest** side
 has not yet run on Android. A guest signs in with an SMS one-time code, so that
 is waiting on the Twilio item below rather than on the app.
 
-SMS delivery currently runs on a Twilio trial account, which only reaches
-pre-verified numbers — production messaging in India additionally requires DLT
-template registration. This is the one dependency holding up both real guest
-sign-in and Android testing of the guest journey.
+### A note on SMS, for anyone evaluating this
+
+SMS delivery currently runs on a Twilio **trial** account, which only reaches
+pre-verified numbers. Production messaging to Indian numbers additionally
+requires DLT template registration.
+
+This is deliberate, not an unfinished edge. The Twilio integration is built and
+has been tested end to end on the trial tier — guest verification codes, round
+reminders and cancel links all work against real numbers on the verified list.
+What has not happened is *paying for a production Twilio account*, because
+production SMS is a recurring per-message cost and it only becomes justified
+once a caterer is actually using the app for a real function.
+
+The order matters here: **SMS is only needed for guest sign-in, which is the
+second half of the product and does nothing on its own.** A guest books a seat
+at an event a host has already created, in a hall that host has already laid
+out. Until there is a host running an event, there are no guests to verify. So
+the sequence is a paying host first, production SMS second — not the reverse.
+
+Everything on the host side — floor design, menus, rounds, walk-ins, QR
+check-in, no-show release — runs today without any of this.
 
 ## Contact
 
