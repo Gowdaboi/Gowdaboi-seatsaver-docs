@@ -4,16 +4,16 @@
   README.html — the deploy workflow in the private repo keeps this file when
   it replaces the web build, so edit it here.
 
-  Every answer is meant to be checkable against the code or a provider's
-  published terms. If the app changes, change the answer; if a provider's
-  limits change, update the table and the date beside it.
+  Written for buyers: every answer must be true of the code, but providers'
+  plans, costs and limits stay out of it — hosting and messaging are run by
+  the AnyProblem Apps team and are not the buyer's concern.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seat Saver — FAQ</title>
-<meta name="description" content="Common questions from caterers evaluating Seat Saver: data storage, privacy, capacity, guests and SMS.">
+<meta name="description" content="Common questions from caterers evaluating Seat Saver: data storage, privacy, capacity, guests and pricing.">
 <link rel="icon" href="favicon.png">
 <style>
   :root {
@@ -60,10 +60,6 @@
   .answer { padding: 0 18px 16px; }
   .answer > :first-child { margin-top: 0; }
   .answer > :last-child { margin-bottom: 0; }
-  .table-wrap { overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; font-size: 0.925rem; }
-  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
-  th { font-weight: 600; }
   .note { color: var(--muted); font-size: 0.875rem; }
   .toolbar { display: flex; gap: 14px; font-size: 0.9rem; margin: 0 0 8px; }
   .toolbar button {
@@ -196,43 +192,18 @@
     <summary>How many guests and users can the app handle?</summary>
     <div class="answer">
       <p>
-        The app sets no limit on guests, events, tables or rounds. The practical
-        ceiling is the hosting plan behind it. Supabase publishes these limits:
+        The app puts no limit on the number of guests, events, tables or rounds,
+        so a large wedding works the same way as a small party.
       </p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th></th><th>Free plan</th><th>Pro plan</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Monthly active users</td><td>50,000</td><td>100,000, then pay per user</td></tr>
-            <tr><td>Database size</td><td>500 MB</td><td>8 GB, then pay per GB</td></tr>
-            <tr><td>Live connections at once</td><td>200</td><td>500, then pay per 1,000</td></tr>
-            <tr><td>Daily backups</td><td>No</td><td>Yes, kept 7 days</td></tr>
-            <tr><td>Paused when idle</td><td>After 1 week</td><td>Never</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">Source: supabase.com/pricing, as of September 2026.</p>
-      <p>What this means for a real event:</p>
-      <ul>
-        <li>
-          <strong>Every guest who signs in counts once per month</strong>, however
-          many times they open the app. A 1,000-guest wedding uses 1,000 of the
-          allowance.
-        </li>
-        <li>
-          <strong>Guests browsing the floor or menu do not hold a live
-          connection.</strong> Pages load and then let go. Live connections are used
-          only on the caterer’s service-requests screen and on the screen of a guest
-          who is being offered a freed seat. So even a hall of several thousand
-          guests stays far below 200 at any moment.
-        </li>
-        <li>
-          <strong>Database size is not a real constraint.</strong> Hundreds of
-          events fit comfortably in 500 MB.
-        </li>
-      </ul>
+      <p>
+        It is also light on resources. Guests looking at the floor plan or menu
+        load the page and then disconnect, rather than staying connected. And a
+        booking takes up only a few hundred bytes.
+      </p>
+      <p>
+        The AnyProblem Apps team runs the hosting and scales it to your event
+        volume, so there is nothing for you to set up or manage.
+      </p>
     </div>
   </details>
 
@@ -305,37 +276,30 @@
     </div>
   </details>
 
-  <h2>Messaging and cost</h2>
+  <h2>Messaging and pricing</h2>
 
   <details id="sms">
-    <summary>Do guests get SMS reminders, and who pays for them?</summary>
+    <summary>Do guests get SMS reminders?</summary>
     <div class="answer">
       <p>
-        Yes. Before their round, a guest gets a reminder with a one-tap link to
-        cancel and free the seat. It goes out 5 minutes ahead by default, and the
-        caterer can change that.
-      </p>
-      <p>
-        Messages go through Twilio, which charges per message. SMS to Indian
-        numbers also requires templates registered under TRAI’s DLT rules. The
-        integration is built and tested on a Twilio trial account. The paid
-        production account comes once a caterer is using the app for a real
-        function, because until then there are no guests to message.
-      </p>
-      <p>
-        The caterer side — floor design, menus, rounds, walk-ins, QR check-in and
-        no-shows — does not depend on SMS at all.
+        Yes. Guests get their sign-in code by SMS. Before their round they also
+        get a reminder with a one-tap link to cancel and free the seat. The
+        reminder goes out 5 minutes ahead by default, and you can change that.
       </p>
     </div>
   </details>
 
   <details id="pricing">
-    <summary>How much does Seat Saver cost?</summary>
+    <summary>What do I pay for?</summary>
     <div class="answer">
       <p>
-        Email
-        <a href="mailto:anyproblemapps@gmail.com?subject=Seat%20Saver%20pricing">anyproblemapps@gmail.com</a>
-        to ask about pricing.
+        <strong>Only the Seat Saver app.</strong> Hosting, the database and SMS
+        messaging are handled by the AnyProblem Apps team. You don’t need your
+        own accounts with any other service, and there are no separate bills.
+      </p>
+      <p>
+        For a price, email
+        <a href="mailto:anyproblemapps@gmail.com?subject=Seat%20Saver%20pricing">anyproblemapps@gmail.com</a>.
       </p>
     </div>
   </details>
