@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--
+  Buyer FAQ. Maintained by hand in the public docs repo, like README.md and
+  README.html — the deploy workflow in the private repo keeps this file when
+  it replaces the web build, so edit it here.
+
+  Every answer is meant to be checkable against the code or a provider's
+  published terms. If the app changes, change the answer; if a provider's
+  limits change, update the table and the date beside it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seat Saver — FAQ</title>
+<meta name="description" content="Common questions from caterers evaluating Seat Saver: data storage, privacy, capacity, guests and SMS.">
+<link rel="icon" href="favicon.png">
+<style>
+  :root {
+    --bg: #fdf6f4; --fg: #2b2320; --muted: #6b5b55;
+    --accent: #8c4a3c; --card: #ffffff; --border: #e8d9d4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1614; --fg: #f2e9e6; --muted: #b9a7a1;
+      --accent: #e29684; --card: #261f1d; --border: #3a302d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px 64px;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { font-size: 1.65rem; line-height: 1.25; margin: 0 0 4px; }
+  h2 {
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin: 40px 0 10px;
+  }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  a { color: var(--accent); }
+  ul { padding-left: 22px; }
+  li { margin: 5px 0; }
+  details {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; margin: 10px 0;
+  }
+  summary {
+    cursor: pointer; padding: 14px 44px 14px 18px; font-weight: 600;
+    list-style: none; position: relative;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+"; position: absolute; right: 18px; top: 50%;
+    transform: translateY(-50%); color: var(--muted); font-weight: 400; font-size: 1.3rem;
+  }
+  details[open] summary::after { content: "−"; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 12px; }
+  .answer { padding: 0 18px 16px; }
+  .answer > :first-child { margin-top: 0; }
+  .answer > :last-child { margin-bottom: 0; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.925rem; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  th { font-weight: 600; }
+  .note { color: var(--muted); font-size: 0.875rem; }
+  .toolbar { display: flex; gap: 14px; font-size: 0.9rem; margin: 0 0 8px; }
+  .toolbar button {
+    background: none; border: 0; padding: 0; color: var(--accent);
+    font: inherit; text-decoration: underline; cursor: pointer;
+  }
+  footer { color: var(--muted); font-size: 0.875rem; margin-top: 44px; }
+  @media print {
+    details { break-inside: avoid; }
+    summary::after, .toolbar { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Seat Saver — Frequently asked questions</h1>
+  <p class="sub">For caterers and venues evaluating the app. <strong>Last updated:</strong> 17 September 2026</p>
+
+  <div class="toolbar">
+    <button type="button" id="expand">Expand all</button>
+    <button type="button" id="collapse">Collapse all</button>
+  </div>
+
+  <h2>Your data</h2>
+
+  <details id="where-stored">
+    <summary>Where is the data stored?</summary>
+    <div class="answer">
+      <p>
+        In a Postgres database hosted by <a href="https://supabase.com">Supabase</a>
+        on Amazon Web Services in the <strong>Mumbai region (ap-south-1)</strong>.
+        The database, sign-in service and account records all live in that region,
+        so guest and event data is held in India.
+      </p>
+      <p>
+        Supabase encrypts all stored data with AES-256 and all traffic in transit
+        with TLS. Supabase itself holds SOC 2 Type 2 and ISO 27001 certification.
+      </p>
+      <p class="note">
+        Two things leave the database to do their job: guest verification codes
+        and round reminders are sent through <a href="https://www.twilio.com">Twilio</a>,
+        which receives the guest’s phone number and the message text (guest name,
+        event name, round number and a cancel link).
+      </p>
+    </div>
+  </details>
+
+  <details id="how-much">
+    <summary>How much data is stored?</summary>
+    <div class="answer">
+      <p>Very little, and none of it is sensitive beyond a phone number.</p>
+      <ul>
+        <li><strong>About the caterer:</strong> business name and contact email. Passwords are handled by the sign-in service and are never visible to us.</li>
+        <li><strong>About each guest:</strong> phone number and, if they give one, a name.</li>
+        <li><strong>About each event:</strong> the floor layout (sections, tables, seats), the menu, the dining rounds, and each booking — party size, round, seat and whether the guest arrived.</li>
+      </ul>
+      <p>
+        No photos, location, contacts, payment details or identity documents are
+        collected. The camera is used only to read a QR code at check-in, and the
+        image is decoded on the device and never recorded or uploaded.
+      </p>
+      <p>
+        In storage terms a booking is a few hundred bytes. A 1,000-guest wedding is
+        well under a megabyte.
+      </p>
+    </div>
+  </details>
+
+  <details id="what-we-do">
+    <summary>What do you do with this data?</summary>
+    <div class="answer">
+      <p>We use it to run your events, and that’s all:</p>
+      <ul>
+        <li>seating guests and managing dining rounds;</li>
+        <li>releasing no-show seats and offering them to waiting guests;</li>
+        <li>sending guests their verification code and a reminder before their round;</li>
+        <li>emailing the caterer about their own account, such as confirmation and password reset.</li>
+      </ul>
+      <p>
+        The app shows no adverts and contains no analytics, tracking or advertising
+        code. Guest phone numbers are used only for that guest’s own verification
+        and reminders — never for marketing.
+      </p>
+      <p>The full terms are in the <a href="privacy-policy.html">privacy policy</a>.</p>
+    </div>
+  </details>
+
+  <details id="who-sees">
+    <summary>Who can see my events and guest list?</summary>
+    <div class="answer">
+      <p>
+        Only you. Each caterer’s events are walled off from every other caterer’s
+        <strong>inside the database</strong>, not just hidden by the app’s screens.
+        So a bug in the app cannot show one caterer another caterer’s event.
+      </p>
+      <p>
+        A guest can see the floor plan and menu of the event they scanned into,
+        plus their own booking. They cannot see other guests’ names or phone
+        numbers.
+      </p>
+    </div>
+  </details>
+
+  <details id="retention">
+    <summary>How long is data kept, and can it be deleted?</summary>
+    <div class="answer">
+      <p>
+        Event records are kept for as long as your account exists, so your past
+        events — floor, menu, bookings and recap — stay available to reuse and look
+        back on. Old events can be archived to hide them without losing anything.
+      </p>
+      <p>
+        <strong>Deleting your account is immediate and permanent.</strong> It
+        removes the account, every event, and all guest bookings and phone numbers
+        tied to those events. Do it in the app under
+        <em>Host dashboard → Account → Delete account</em>, or follow
+        <a href="delete-account.html">Delete your account</a> if the app is no
+        longer installed.
+      </p>
+      <p>
+        Guests can ask for their own number and booking history to be removed by
+        emailing <a href="mailto:anyproblemapps@gmail.com?subject=Seat%20Saver%20guest%20data%20deletion">anyproblemapps@gmail.com</a>.
+      </p>
+    </div>
+  </details>
+
+  <h2>Scale</h2>
+
+  <details id="how-many-users">
+    <summary>How many guests and users can the app handle?</summary>
+    <div class="answer">
+      <p>
+        The app sets no limit on guests, events, tables or rounds. The practical
+        ceiling is the hosting plan behind it. Supabase publishes these limits:
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th></th><th>Free plan</th><th>Pro plan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Monthly active users</td><td>50,000</td><td>100,000, then pay per user</td></tr>
+            <tr><td>Database size</td><td>500 MB</td><td>8 GB, then pay per GB</td></tr>
+            <tr><td>Live connections at once</td><td>200</td><td>500, then pay per 1,000</td></tr>
+            <tr><td>Daily backups</td><td>No</td><td>Yes, kept 7 days</td></tr>
+            <tr><td>Paused when idle</td><td>After 1 week</td><td>Never</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Source: supabase.com/pricing, as of September 2026.</p>
+      <p>What this means for a real event:</p>
+      <ul>
+        <li>
+          <strong>Every guest who signs in counts once per month</strong>, however
+          many times they open the app. A 1,000-guest wedding uses 1,000 of the
+          allowance.
+        </li>
+        <li>
+          <strong>Guests browsing the floor or menu do not hold a live
+          connection.</strong> Pages load and then let go. Live connections are used
+          only on the caterer’s service-requests screen and on the screen of a guest
+          who is being offered a freed seat. So even a hall of several thousand
+          guests stays far below 200 at any moment.
+        </li>
+        <li>
+          <strong>Database size is not a real constraint.</strong> Hundreds of
+          events fit comfortably in 500 MB.
+        </li>
+      </ul>
+    </div>
+  </details>
+
+  <details id="multiple-events">
+    <summary>Can I run more than one event, or have several staff logged in?</summary>
+    <div class="answer">
+      <p>
+        A caterer account can hold any number of events, and past events stay
+        available for reference.
+      </p>
+      <p>
+        Today there is <strong>one login per caterer business</strong>. Separate
+        staff accounts with their own permissions are not built yet.
+      </p>
+    </div>
+  </details>
+
+  <h2>Guests on the day</h2>
+
+  <details id="guest-install">
+    <summary>Do guests need to download an app or create an account?</summary>
+    <div class="answer">
+      <p>
+        No. Guests scan a QR code at the venue and the app opens in their phone’s
+        browser. They confirm their phone number with a
+        one-time code — no password, no email, no signup.
+      </p>
+      <p>
+        Walk-ins without a smartphone can still be seated: the caterer assigns them
+        a seat directly.
+      </p>
+    </div>
+  </details>
+
+  <details id="devices">
+    <summary>What devices does it run on?</summary>
+    <div class="answer">
+      <ul>
+        <li><strong>Guests:</strong> a modern phone browser.</li>
+        <li><strong>Caterers:</strong> the Android app, currently in testing on Google Play before public release, or any browser on a phone, tablet or laptop.</li>
+      </ul>
+      <p>There is no native iPhone app yet.</p>
+    </div>
+  </details>
+
+  <details id="internet">
+    <summary>What happens if the venue has poor internet?</summary>
+    <div class="answer">
+      <p>
+        Seat Saver needs a connection — mobile data is enough. Seating is shared
+        live between the caterer and every guest, so there is no offline mode.
+      </p>
+      <p>
+        When a connection drops, the caterer’s rounds screen shows how long ago
+        it last updated, so staff can see the data is stale rather than trusting
+        it. It refreshes by itself once the connection returns.
+      </p>
+    </div>
+  </details>
+
+  <details id="no-shows">
+    <summary>What happens when a booked guest doesn’t turn up?</summary>
+    <div class="answer">
+      <p>
+        Once a round starts, a seat not checked in within the event’s no-show time
+        (5 minutes unless the caterer changes it) is released. It is then offered
+        to waiting guests one at a time, in order. Each guest gets a short window
+        to accept (1 minute by default) before it passes to the next person.
+      </p>
+    </div>
+  </details>
+
+  <h2>Messaging and cost</h2>
+
+  <details id="sms">
+    <summary>Do guests get SMS reminders, and who pays for them?</summary>
+    <div class="answer">
+      <p>
+        Yes. Before their round, a guest gets a reminder with a one-tap link to
+        cancel and free the seat. It goes out 5 minutes ahead by default, and the
+        caterer can change that.
+      </p>
+      <p>
+        Messages go through Twilio, which charges per message. SMS to Indian
+        numbers also requires templates registered under TRAI’s DLT rules. The
+        integration is built and tested on a Twilio trial account. The paid
+        production account comes once a caterer is using the app for a real
+        function, because until then there are no guests to message.
+      </p>
+      <p>
+        The caterer side — floor design, menus, rounds, walk-ins, QR check-in and
+        no-shows — does not depend on SMS at all.
+      </p>
+    </div>
+  </details>
+
+  <details id="pricing">
+    <summary>How much does Seat Saver cost?</summary>
+    <div class="answer">
+      <p>
+        Email
+        <a href="mailto:anyproblemapps@gmail.com?subject=Seat%20Saver%20pricing">anyproblemapps@gmail.com</a>
+        to ask about pricing.
+      </p>
+    </div>
+  </details>
+
+  <h2>Still have a question?</h2>
+  <p>
+    Email <a href="mailto:anyproblemapps@gmail.com?subject=Seat%20Saver%20question">anyproblemapps@gmail.com</a>.
+    For how the app works, see the <a href="README.html">product overview</a>. You
+    can also <a href="./">try the web app</a>.
+  </p>
+
+  <footer>
+    <p>
+      <a href="README.html">Overview</a> ·
+      <a href="privacy-policy.html">Privacy policy</a> ·
+      <a href="delete-account.html">Delete your account</a>
+    </p>
+  </footer>
+</main>
+<script>
+  // Open whichever question a shared link points at, e.g. faq.html#how-many-users.
+  function openFromHash() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === "DETAILS") { el.open = true; el.scrollIntoView(); }
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
+  function setAll(open) {
+    document.querySelectorAll("details").forEach(function (d) { d.open = open; });
+  }
+  document.getElementById("expand").addEventListener("click", function () { setAll(true); });
+  document.getElementById("collapse").addEventListener("click", function () { setAll(false); });
+  // Printing should show every answer, not just the ones left open.
+  window.addEventListener("beforeprint", function () { setAll(true); });
+</script>
+</body>
+</html>
