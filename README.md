@@ -50,7 +50,7 @@ offers a way to grant it later rather than becoming a dead end.
 - **Flutter** — one codebase, running on web and Android
 - **Supabase** — Postgres with Row Level Security, Auth, Realtime, and Edge
   Functions
-- **Twilio** — SMS and WhatsApp for guest verification and round reminders
+- **Twilio** — SMS for guest sign-in codes and round reminders
 
 Multi-tenancy is enforced in the database rather than the application: every
 caterer's data is isolated by row-level policies, so an app-layer bug cannot
@@ -95,36 +95,28 @@ against live data.
 The Android build is signed and preparing for Play Store release. The **host**
 side has been run there properly — every host screen, and the whole workflow
 end to end: designing a floor, adding a menu, starting a round, seating a
-walk-in, generating the event QR, and checking a guest in. The **guest** side
-has not yet run on Android. A guest signs in with an SMS one-time code, so that
-is waiting on the Twilio item below rather than on the app.
+walk-in, generating the event QR, and checking a guest in. Guests use Seat
+Saver in their phone's browser, straight from the venue QR code.
 
-### A note on SMS, for anyone evaluating this
+### Hosting and messaging
 
-SMS delivery currently runs on a Twilio **trial** account, which only reaches
-pre-verified numbers. Production messaging to Indian numbers additionally
-requires DLT template registration.
+Seat Saver is a managed service. Hosting, the database and SMS messaging are
+all run by the AnyProblem Apps team, and each caterer is set up at the scale
+their events need. A caterer pays for Seat Saver only — no other accounts to
+open, no separate bills.
 
-This is deliberate, not an unfinished edge. The Twilio integration is built and
-has been tested end to end on the trial tier — guest verification codes, round
-reminders and cancel links all work against real numbers on the verified list.
-What has not happened is *paying for a production Twilio account*, because
-production SMS is a recurring per-message cost and it only becomes justified
-once a caterer is actually using the app for a real function.
-
-The order matters here: **SMS is only needed for guest sign-in, which is the
-second half of the product and does nothing on its own.** A guest books a seat
-at an event a host has already created, in a hall that host has already laid
-out. Until there is a host running an event, there are no guests to verify. So
-the sequence is a paying host first, production SMS second — not the reverse.
-
-Everything on the host side — floor design, menus, rounds, walk-ins, QR
-check-in, no-show release — runs today without any of this.
+To try the guest side yourself, including the sign-in code and round
+reminders, email us the phone number you'd like to use and we'll enable it.
 
 ## Contact
 
 Questions, feedback, bug reports and data requests:
 **anyproblemapps@gmail.com**
+
+## Questions
+
+Where data is stored, what it's used for, how many guests the app handles —
+see the [FAQ](faq.html).
 
 ## Privacy and data deletion
 

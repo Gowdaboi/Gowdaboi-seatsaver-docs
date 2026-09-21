@@ -72,7 +72,7 @@
 <ul>
 <li><strong>Flutter</strong> — one codebase, running on web and Android</li>
 <li><strong>Supabase</strong> — Postgres with Row Level Security, Auth, Realtime, and Edge Functions</li>
-<li><strong>Twilio</strong> — SMS and WhatsApp for guest verification and round reminders</li>
+<li><strong>Twilio</strong> — SMS for guest sign-in codes and round reminders</li>
 </ul>
 <p>Multi-tenancy is enforced in the database rather than the application: every caterer's data is isolated by row-level policies, so an app-layer bug cannot leak one caterer's event into another's. Anything that has to be atomic, or that legitimately needs to read across that boundary, runs as a database function that begins by checking who is asking.</p>
 <h2>A few design decisions worth explaining</h2>
@@ -83,14 +83,14 @@
 <p><strong>Cancelling a booking frees only the seats it is actually holding.</strong> A booking for a later sitting holds no physical seat yet, so releasing everything it points at would evict whoever is sitting there right now.</p>
 <h2>Current state</h2>
 <p>Working and deployed on the web. Guest booking, host floor design, dining rounds, QR check-in, no-show handling and reminder delivery are all implemented against live data.</p>
-<p>The Android build is signed and preparing for Play Store release. The <strong>host</strong> side has been run there properly — every host screen, and the whole workflow end to end: designing a floor, adding a menu, starting a round, seating a walk-in, generating the event QR, and checking a guest in. The <strong>guest</strong> side has not yet run on Android. A guest signs in with an SMS one-time code, so that is waiting on the Twilio item below rather than on the app.</p>
-<h3>A note on SMS, for anyone evaluating this</h3>
-<p>SMS delivery currently runs on a Twilio <strong>trial</strong> account, which only reaches pre-verified numbers. Production messaging to Indian numbers additionally requires DLT template registration.</p>
-<p>This is deliberate, not an unfinished edge. The Twilio integration is built and has been tested end to end on the trial tier — guest verification codes, round reminders and cancel links all work against real numbers on the verified list. What has not happened is <em>paying for a production Twilio account</em>, because production SMS is a recurring per-message cost and it only becomes justified once a caterer is actually using the app for a real function.</p>
-<p>The order matters here: <strong>SMS is only needed for guest sign-in, which is the second half of the product and does nothing on its own.</strong> A guest books a seat at an event a host has already created, in a hall that host has already laid out. Until there is a host running an event, there are no guests to verify. So the sequence is a paying host first, production SMS second — not the reverse.</p>
-<p>Everything on the host side — floor design, menus, rounds, walk-ins, QR check-in, no-show release — runs today without any of this.</p>
+<p>The Android build is signed and preparing for Play Store release. The <strong>host</strong> side has been run there properly — every host screen, and the whole workflow end to end: designing a floor, adding a menu, starting a round, seating a walk-in, generating the event QR, and checking a guest in. Guests use Seat Saver in their phone's browser, straight from the venue QR code.</p>
+<h3>Hosting and messaging</h3>
+<p>Seat Saver is a managed service. Hosting, the database and SMS messaging are all run by the AnyProblem Apps team, and each caterer is set up at the scale their events need. A caterer pays for Seat Saver only — no other accounts to open, no separate bills.</p>
+<p>To try the guest side yourself, including the sign-in code and round reminders, email us the phone number you'd like to use and we'll enable it.</p>
 <h2>Contact</h2>
 <p>Questions, feedback, bug reports and data requests: <strong>anyproblemapps@gmail.com</strong></p>
+<h2>Questions</h2>
+<p>Where data is stored, what it's used for, how many guests the app handles — see the <a href="faq.html">FAQ</a>.</p>
 <h2>Privacy and data deletion</h2>
 <p>See <a href="privacy-policy.html">privacy-policy.html</a>.</p>
 <p>Hosts can permanently delete their account and all associated data from inside the app, or request deletion by email — see <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/delete-account.html">Delete your account</a>.</p>
