@@ -92,11 +92,13 @@ Working and deployed on the web. Guest booking, host floor design, dining
 rounds, QR check-in, no-show handling and reminder delivery are all implemented
 against live data.
 
-The Android build is signed and preparing for Play Store release. The **host**
-side has been run there properly — every host screen, and the whole workflow
-end to end: designing a floor, adding a menu, starting a round, seating a
-walk-in, generating the event QR, and checking a guest in. Guests use Seat
-Saver in their phone's browser, straight from the venue QR code.
+**Seat Saver is live on Google Play:**
+[play.google.com/store/apps/details?id=com.seatsaver.app](https://play.google.com/store/apps/details?id=com.seatsaver.app).
+Caterers can install the Android app, or use the web app in any browser. The
+**host** side has been run on Android properly — every host screen, and the
+whole workflow end to end: designing a floor, adding a menu, starting a round,
+seating a walk-in, generating the event QR, and checking a guest in. Guests
+use Seat Saver in their phone's browser, straight from the venue QR code.
 
 ### Hosting and messaging
 
@@ -128,7 +130,8 @@ the app, or request deletion by email — see
 
 ## Try it
 
-The web app runs at
+Install it from [Google Play](https://play.google.com/store/apps/details?id=com.seatsaver.app),
+or use the web app at
 [gowdaboi.github.io/Gowdaboi-seatsaver-docs](https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/).
 
 ## About this repository
