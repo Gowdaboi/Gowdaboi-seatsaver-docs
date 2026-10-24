@@ -81,9 +81,11 @@
 <p><strong>Events are archived, never deleted.</strong> A caterer running two functions a week accumulates a hundred a year, and they clutter every picker in the app. Archiving hides an event completely while preserving the floor, menu, bookings and recap. The only thing that truly deletes is a host deleting their whole account, which is a different intent entirely.</p>
 <p><strong>A missed reminder stays missed.</strong> Round reminders count back from a round's <em>scheduled</em> start, not the moment the host presses Start — which is too late to warn anyone. If the send window is missed, nothing is sent: a late "starts in 5 minutes" is worse than silence.</p>
 <p><strong>Cancelling a booking frees only the seats it is actually holding.</strong> A booking for a later sitting holds no physical seat yet, so releasing everything it points at would evict whoever is sitting there right now.</p>
+<h2>Get it</h2>
+<p><strong><a href="https://play.google.com/store/apps/details?id=com.seatsaver.app">Seat Saver on Google Play</a></strong> — live, free, for caterers and floor managers.</p>
+<p>Guests need nothing: they scan the QR code at the venue and Seat Saver opens in their phone's browser.</p>
 <h2>Current state</h2>
-<p>Working and deployed on the web. Guest booking, host floor design, dining rounds, QR check-in, no-show handling and reminder delivery are all implemented against live data.</p>
-<p>The Android build is signed and preparing for Play Store release. The <strong>host</strong> side has been run there properly — every host screen, and the whole workflow end to end: designing a floor, adding a menu, starting a round, seating a walk-in, generating the event QR, and checking a guest in. Guests use Seat Saver in their phone's browser, straight from the venue QR code.</p>
+<p>Live on Google Play, and on the web. Guest booking, host floor design, dining rounds, QR check-in, no-show handling and reminder delivery all run against live data.</p>
 <h3>Hosting and messaging</h3>
 <p>Seat Saver is a managed service. Hosting, the database and SMS messaging are all run by the AnyProblem Apps team, and each caterer is set up at the scale their events need. A caterer pays for Seat Saver only — no other accounts to open, no separate bills.</p>
 <p>To try the guest side yourself, including the sign-in code and round reminders, email us the phone number you'd like to use and we'll enable it.</p>
@@ -95,7 +97,7 @@
 <p>See <a href="privacy-policy.html">privacy-policy.html</a>.</p>
 <p>Hosts can permanently delete their account and all associated data from inside the app, or request deletion by email — see <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/delete-account.html">Delete your account</a>.</p>
 <h2>Try it</h2>
-<p>The web app runs at <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/">gowdaboi.github.io/Gowdaboi-seatsaver-docs</a>.</p>
+<p>The Android app is on <a href="https://play.google.com/store/apps/details?id=com.seatsaver.app">Google Play</a>, and the same app runs in a browser at <a href="https://gowdaboi.github.io/Gowdaboi-seatsaver-docs/">gowdaboi.github.io/Gowdaboi-seatsaver-docs</a>.</p>
 <h2>About this repository</h2>
 <p>This repo holds the public face of Seat Saver: this overview, the privacy policy and account-deletion page, and the compiled web build that serves the app. <strong>The source is not here</strong> — the Flutter and database code, the schema and row-level security policies, and the design decision log all live in a separate private repository. What you can see here is what any visitor's browser downloads to run the app.</p>
 <footer>
