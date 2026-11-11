@@ -67,8 +67,8 @@
   </ul>
 
   <h2>Information we collect</h2>
-  <p><strong>From hosts:</strong> email address and business name, used to create and secure your account (Supabase Auth, email/password).</p>
-  <p><strong>From guests:</strong> phone number and name, used to verify your identity via SMS one-time password (OTP) and to prevent duplicate bookings at the same event. We do not require a guest to create a password or provide an email.</p>
+  <p><strong>From hosts:</strong> business name, and an email address or a WhatsApp phone number — whichever you sign in with — used to create and secure your account (Supabase Auth). You may link both so either one opens the same account.</p>
+  <p><strong>From guests:</strong> phone number and name, used to verify your identity with a one-time code sent on WhatsApp and to prevent duplicate bookings at the same event. We do not require a guest to create a password, install an app, or provide an email.</p>
   <p><strong>Event and booking data:</strong> seat selections, booking timestamps, no-show/arrival status, and any feedback a guest submits to a host. This data is scoped to the specific event and is visible only to that event’s host and to the guest who made the booking.</p>
   <p><strong>Camera access:</strong> the app requests camera permission to scan QR codes (for event check-in and booking confirmation). The camera feed is processed on your device to read the QR code and is not recorded, stored, or transmitted as an image or video.</p>
   <p><strong>Usage data (hosts only):</strong> when a caterer uses the app we
@@ -90,7 +90,7 @@
   <ul>
     <li>To authenticate hosts and guests and keep each caterer’s event data isolated from every other caterer (multi-tenant data separation, enforced at the database level).</li>
     <li>To manage seating, dining rounds, and no-show/reassignment logic during an event.</li>
-    <li>To send booking confirmations and round-start reminders by SMS (via Twilio) to the phone number a guest provides.</li>
+    <li>To send booking confirmations and round-start reminders on WhatsApp (via the WhatsApp Business Cloud API, operated by Meta) to the phone number a guest provides.</li>
     <li>To send account-related email (e.g. confirmation, password reset) to hosts via Supabase’s email service.</li>
     <li>To count which features caterers use, so the app improves where it is actually used. Hosts can turn this off in the app.</li>
   </ul>
@@ -106,7 +106,7 @@
   <h2>Third-party services</h2>
   <ul>
     <li><strong>Supabase</strong> (database, authentication, realtime updates) — <a href="https://supabase.com/privacy">supabase.com/privacy</a></li>
-    <li><strong>Twilio</strong> (SMS delivery for guest OTP and reminders) — <a href="https://www.twilio.com/en-us/legal/privacy">twilio.com/en-us/legal/privacy</a></li>
+    <li><strong>Meta Platforms</strong> (WhatsApp Business Cloud API — delivery of sign-in codes and reminders) — <a href="https://www.whatsapp.com/legal/business-data-transfer-addendum">whatsapp.com/legal</a></li>
   </ul>
   <p>These providers process data on our behalf under their own privacy and security terms.</p>
 

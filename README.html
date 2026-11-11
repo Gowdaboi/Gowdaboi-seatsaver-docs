@@ -65,14 +65,14 @@
 <li>Scan a QR code at the venue; no app install, no account signup</li>
 <li>See the menu and the actual floor plan the host designed</li>
 <li>Book a seat for the next round with room</li>
-<li>Get an SMS reminder before the round starts, with a one-tap link to cancel and free the seat for someone else</li>
+<li>Get a WhatsApp reminder before the round starts, with a one-tap link to cancel and free the seat for someone else</li>
 </ul>
 <p>The camera is used on exactly one screen — a host scanning a guest in — and the frame is read on the device to decode the QR, never recorded or uploaded. Declining the permission leaves the rest of the app working, and that screen offers a way to grant it later rather than becoming a dead end.</p>
 <h2>Tech</h2>
 <ul>
 <li><strong>Flutter</strong> — one codebase, running on web and Android</li>
 <li><strong>Supabase</strong> — Postgres with Row Level Security, Auth, Realtime, and Edge Functions</li>
-<li><strong>Twilio</strong> — SMS for guest sign-in codes and round reminders</li>
+<li><strong>WhatsApp</strong> — sign-in codes and round reminders, through the WhatsApp Business Cloud API</li>
 </ul>
 <p>Multi-tenancy is enforced in the database rather than the application: every caterer's data is isolated by row-level policies, so an app-layer bug cannot leak one caterer's event into another's. Anything that has to be atomic, or that legitimately needs to read across that boundary, runs as a database function that begins by checking who is asking.</p>
 <h2>A few design decisions worth explaining</h2>
@@ -87,8 +87,8 @@
 <h2>Current state</h2>
 <p>Live on Google Play, and on the web. Guest booking, host floor design, dining rounds, QR check-in, no-show handling and reminder delivery all run against live data.</p>
 <h3>Hosting and messaging</h3>
-<p>Seat Saver is a managed service. Hosting, the database and SMS messaging are all run by the AnyProblem Apps team, and each caterer is set up at the scale their events need. A caterer pays for Seat Saver only — no other accounts to open, no separate bills.</p>
-<p>To try the guest side yourself, including the sign-in code and round reminders, email us the phone number you'd like to use and we'll enable it.</p>
+<p>Seat Saver is a managed service. Hosting, the database and WhatsApp messaging are all run by the AnyProblem Apps team, and each caterer is set up at the scale their events need. A caterer pays for Seat Saver only — no other accounts to open, no separate bills.</p>
+<p>Guests need nothing but WhatsApp, which they already have. There is no app to install, no account to create and no password to remember.</p>
 <h2>Contact</h2>
 <p>Questions, feedback, bug reports and data requests: <strong>anyproblemapps@gmail.com</strong></p>
 <h2>Questions</h2>

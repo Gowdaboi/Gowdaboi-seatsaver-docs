@@ -37,8 +37,8 @@ the thing a paper chart cannot express.
 - Scan a QR code at the venue; no app install, no account signup
 - See the menu and the actual floor plan the host designed
 - Book a seat for the next round with room
-- Get an SMS reminder before the round starts, with a one-tap link to cancel
-  and free the seat for someone else
+- Get a WhatsApp reminder before the round starts, with a one-tap link to
+  cancel and free the seat for someone else
 
 The camera is used on exactly one screen — a host scanning a guest in — and the
 frame is read on the device to decode the QR, never recorded or uploaded.
@@ -50,7 +50,8 @@ offers a way to grant it later rather than becoming a dead end.
 - **Flutter** — one codebase, running on web and Android
 - **Supabase** — Postgres with Row Level Security, Auth, Realtime, and Edge
   Functions
-- **Twilio** — SMS for guest sign-in codes and round reminders
+- **WhatsApp** — sign-in codes and round reminders, through the WhatsApp
+  Business Cloud API
 
 Multi-tenancy is enforced in the database rather than the application: every
 caterer's data is isolated by row-level policies, so an app-layer bug cannot
@@ -102,13 +103,13 @@ live data.
 
 ### Hosting and messaging
 
-Seat Saver is a managed service. Hosting, the database and SMS messaging are
-all run by the AnyProblem Apps team, and each caterer is set up at the scale
-their events need. A caterer pays for Seat Saver only — no other accounts to
-open, no separate bills.
+Seat Saver is a managed service. Hosting, the database and WhatsApp messaging
+are all run by the AnyProblem Apps team, and each caterer is set up at the
+scale their events need. A caterer pays for Seat Saver only — no other
+accounts to open, no separate bills.
 
-To try the guest side yourself, including the sign-in code and round
-reminders, email us the phone number you'd like to use and we'll enable it.
+Guests need nothing but WhatsApp, which they already have. There is no app to
+install, no account to create and no password to remember.
 
 ## Contact
 
